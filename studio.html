@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WA Sender Studio</title>
+    <link rel="stylesheet" href="styles/studio.css" />
+  </head>
+  <body class="studio-body">
+    <div class="studio-shell">
+      <aside class="studio-sidebar">
+        <section class="brand-card">
+          <p class="eyebrow">Free Forever</p>
+          <h1>WA Sender Studio</h1>
+          <p class="subcopy">
+            A cleaner campaign workspace for WhatsApp bulk messaging with a proper audience
+            dashboard, compose tools, and live run tracking.
+          </p>
+
+          <div class="sidebar-actions">
+            <span id="status-badge" class="badge badge--idle">Idle</span>
+            <button id="open-wa-btn" class="ghost-button" type="button">Open WhatsApp Web</button>
+            <button id="refresh-wa-btn" class="ghost-button" type="button">Refresh WhatsApp Data</button>
+          </div>
+        </section>
+
+        <nav class="page-nav card">
+          <button class="page-tab page-tab--active" data-page-tab="home" type="button">Overview</button>
+          <button class="page-tab" data-page-tab="audience" type="button">Audience</button>
+          <button class="page-tab" data-page-tab="compose" type="button">Compose</button>
+          <button class="page-tab" data-page-tab="campaign" type="button">Campaign</button>
+          <button class="page-tab" data-page-tab="results" type="button">Results</button>
+        </nav>
+
+        <section class="card">
+          <div class="card__title-row">
+            <h2>Connection</h2>
+            <div id="connection-meta" class="muted">Waiting for WhatsApp Web.</div>
+          </div>
+
+          <div class="status-grid">
+            <div class="status-tile">
+              <span class="stat-label">Bridge</span>
+              <strong id="bridge-status-text">Unknown</strong>
+            </div>
+            <div class="status-tile">
+              <span class="stat-label">Auth</span>
+              <strong id="auth-status-text">Unknown</strong>
+            </div>
+            <div class="status-tile">
+              <span class="stat-label">Stream</span>
+              <strong id="stream-status-text">Unknown</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="card live-run-card">
+          <div class="card__title-row">
+            <h2>Live Run</h2>
+            <div id="run-hint" class="muted">Ready when you are.</div>
+          </div>
+
+          <div class="risk-panel">
+            <div id="restriction-risk-gauge" class="risk-gauge risk-gauge--low">
+              <div class="risk-gauge__inner">
+                <strong id="restriction-risk-percent">8%</strong>
+                <span>Estimate</span>
+              </div>
+            </div>
+
+            <div class="risk-panel__copy">
+              <span class="stat-label">Restriction Risk</span>
+              <strong id="restriction-risk-label">Low</strong>
+              <div id="restriction-risk-summary" class="muted">
+                Local estimate using pace, failures, daily volume, consent coverage, and manual
+                block/report counts.
+              </div>
+            </div>
+          </div>
+
+          <div id="restriction-risk-note" class="summary summary--muted">
+            This is a local estimate, not an official WhatsApp ban prediction.
+          </div>
+
+          <div class="progress-card">
+            <div class="progress-card__stats">
+              <div>
+                <span class="stat-label">Total</span>
+                <strong id="total-count">0</strong>
+              </div>
+              <div>
+                <span class="stat-label">Done</span>
+                <strong id="done-count">0</strong>
+              </div>
+              <div>
+                <span class="stat-label">Success</span>
+                <strong id="success-count">0</strong>
+              </div>
+              <div>
+                <span class="stat-label">Failed</span>
+                <strong id="failure-count">0</strong>
+              </div>
+            </div>
+
+            <div class="progress-bar">
+              <div id="progress-fill" class="progress-bar__fill"></div>
+            </div>
+
+            <div id="active-recipient" class="summary summary--muted">
+              No job running.
+            </div>
+          </div>
+        </section>
+      </aside>
+
+      <main class="studio-main">
+        <section class="page-panel page-panel--active" data-page-panel="home">
+          <section class="hero-banner hero-banner--wide">
+            <div class="hero-banner__copy">
+              <p class="eyebrow">Campaign Workspace</p>
+              <h2>Plan, preview, and run without fighting the interface.</h2>
+              <p class="subcopy">
+                The studio now keeps audience setup, composition, campaign controls, and results
+                clearly separated so the workflow stays readable while a campaign is running.
+              </p>
+            </div>
+          </section>
+
+          <div class="overview-metrics">
+            <section class="overview-card">
+              <span class="stat-label">WhatsApp</span>
+              <strong id="overview-connection-status">Waiting for login</strong>
+              <p class="muted">The sender will only start when WhatsApp Web is ready.</p>
+            </section>
+            <section class="overview-card">
+              <span class="stat-label">Audience</span>
+              <strong id="overview-audience-status">No recipients ready</strong>
+              <p class="muted">Import, paste, or select recipients before you start.</p>
+            </section>
+            <section class="overview-card">
+              <span class="stat-label">Compose</span>
+              <strong id="overview-compose-status">Message not ready</strong>
+              <p class="muted">Use templates, attachments, and preview tools before sending.</p>
+            </section>
+            <section class="overview-card">
+              <span class="stat-label">Run State</span>
+              <strong id="overview-run-status">Idle</strong>
+              <p class="muted">A WhatsApp-side monitor appears automatically during campaigns.</p>
+            </section>
+          </div>
+
+          <div class="page-grid page-grid--2">
+            <section class="card accent-card">
+              <div class="card__title-row">
+                <h2>Quick Flow</h2>
+              </div>
+              <div class="bullet-list">
+                <div>1. Open WhatsApp Web and wait until the account is fully logged in.</div>
+                <div>2. Pick numbers, chats, contacts, groups, labels, or country audiences.</div>
+                <div>3. Write or paste the message and check the preview.</div>
+                <div>4. Set delays and batch pauses to match your campaign pace.</div>
+                <div>5. Start the run and watch progress both here and inside WhatsApp Web.</div>
+              </div>
+            </section>
+
+            <section class="card">
+              <div class="card__title-row">
+                <h2>Studio Benefits</h2>
+              </div>
+              <div class="bullet-list">
+                <div>Cleaner page sections with better spacing and fewer cramped controls.</div>
+                <div>Audience insight cards, including selected group member totals.</div>
+                <div>Live compose preview so placeholders are easier to understand.</div>
+                <div>WhatsApp-side floating run monitor with pause, resume, and stop.</div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="page-panel" data-page-panel="audience">
+          <div class="page-grid page-grid--audience">
+            <section class="card">
+              <div class="card__title-row">
+                <h2>Audience</h2>
+                <div id="audience-summary" class="muted">Choose how you want to target recipients.</div>
+              </div>
+
+              <div class="source-tabs">
+                <button class="source-tab source-tab--active" data-source-tab="numbers" type="button">Numbers</button>
+                <button class="source-tab" data-source-tab="chats" type="button">Chats</button>
+                <button class="source-tab" data-source-tab="contacts" type="button">Contacts</button>
+                <button class="source-tab" data-source-tab="groups" type="button">Groups</button>
+                <button class="source-tab" data-source-tab="labels" type="button">Labels</button>
+                <button class="source-tab" data-source-tab="countries" type="button">Countries</button>
+              </div>
+
+              <div id="numbers-panel" class="source-panel">
+                <div class="card__title-row compact">
+                  <div class="summary summary--muted">Paste numbers directly or import a file.</div>
+                  <div class="card__actions">
+                    <button id="paste-numbers-btn" class="link-button" type="button">Paste Numbers</button>
+                    <button id="clear-manual-numbers-btn" class="link-button" type="button">Clear Manual</button>
+                  </div>
+                </div>
+
+                <label class="field">
+                  <span class="field__label">Manual Numbers</span>
+                  <textarea
+                    id="numbers-input"
+                    rows="7"
+                    placeholder="+15551234567&#10;+919876543210&#10;One number per line or comma-separated"
+                  ></textarea>
+                </label>
+
+                <div class="grid grid--2">
+                  <label class="field">
+                    <span class="field__label">Import CSV / XLSX</span>
+                    <input id="recipient-file-input" type="file" accept=".csv,.txt,.xlsx" />
+                  </label>
+
+                  <div class="field field--info">
+                    <span class="field__label">Detected Variables</span>
+                    <div id="variables-list" class="chip-list">
+                      <span class="muted">Import a file to enable placeholders.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card__title-row compact">
+                  <div id="recipient-summary" class="summary summary--muted">
+                    No imported recipients yet.
+                  </div>
+                  <button id="download-template-btn" class="link-button" type="button">Download Template</button>
+                </div>
+              </div>
+
+              <div id="discovery-panel" class="source-panel hidden">
+                <div class="grid grid--2">
+                  <label class="field">
+                    <span class="field__label">Search</span>
+                    <input id="discovery-search-input" type="search" placeholder="Filter the current audience list" />
+                  </label>
+
+                  <label id="include-admins-row" class="field checkbox-field hidden">
+                    <input id="include-admins-checkbox" type="checkbox" checked />
+                    <span>Include group admins when expanding group members</span>
+                  </label>
+                </div>
+
+                <div class="card__title-row compact">
+                  <div id="selection-summary" class="summary summary--muted">
+                    Refresh WhatsApp data to load this audience list.
+                  </div>
+                  <div class="card__actions">
+                    <button id="select-visible-btn" class="link-button" type="button">Select Visible</button>
+                    <button id="clear-selection-btn" class="link-button" type="button">Clear Selection</button>
+                  </div>
+                </div>
+                <div id="estimated-recipients" class="muted selection-meta">
+                  No audience selected yet.
+                </div>
+                <div id="discovery-list" class="selection-list"></div>
+              </div>
+            </section>
+
+            <aside class="stack-column">
+              <section class="card">
+                <div class="card__title-row">
+                  <h2>Loaded Data</h2>
+                  <div class="muted">After refresh</div>
+                </div>
+                <div class="mini-metrics">
+                  <div class="mini-metric">
+                    <span class="stat-label">Chats</span>
+                    <strong id="loaded-chats-count">0</strong>
+                  </div>
+                  <div class="mini-metric">
+                    <span class="stat-label">Contacts</span>
+                    <strong id="loaded-contacts-count">0</strong>
+                  </div>
+                  <div class="mini-metric">
+                    <span class="stat-label">Groups</span>
+                    <strong id="loaded-groups-count">0</strong>
+                  </div>
+                  <div class="mini-metric">
+                    <span class="stat-label">Labels</span>
+                    <strong id="loaded-labels-count">0</strong>
+                  </div>
+                  <div class="mini-metric">
+                    <span class="stat-label">Countries</span>
+                    <strong id="loaded-countries-count">0</strong>
+                  </div>
+                  <div class="mini-metric">
+                    <span class="stat-label">Visible</span>
+                    <strong id="selected-search-count">0</strong>
+                  </div>
+                </div>
+              </section>
+
+              <section class="card">
+                <div class="card__title-row">
+                  <h2>Selection Snapshot</h2>
+                  <div class="muted">Current source</div>
+                </div>
+                <div class="mini-metrics">
+                  <div class="mini-metric">
+                    <span class="stat-label">Selected</span>
+                    <strong id="selected-source-count">0</strong>
+                  </div>
+                  <div class="mini-metric">
+                    <span class="stat-label">Estimate</span>
+                    <strong id="selected-estimate-count">0</strong>
+                  </div>
+                  <div class="mini-metric">
+                    <span class="stat-label">Group Members</span>
+                    <strong id="selected-group-members-count">0</strong>
+                  </div>
+                </div>
+                <div id="selection-breakdown" class="summary summary--muted">
+                  Select audience items to see a better breakdown here.
+                </div>
+              </section>
+
+              <section class="card">
+                <div class="card__title-row">
+                  <h2>Exclusions</h2>
+                  <div class="muted">Do not contact</div>
+                </div>
+                <label class="field">
+                  <span class="field__label">Excluded Numbers</span>
+                  <textarea
+                    id="exclude-numbers-input"
+                    rows="6"
+                    placeholder="+15551234567&#10;+919876543210&#10;Any matching recipient will be skipped"
+                  ></textarea>
+                </label>
+                <div id="exclude-summary" class="summary summary--muted">
+                  No exclusions added yet.
+                </div>
+              </section>
+
+              <section class="card">
+                <div class="card__title-row">
+                  <h2>Saved Audiences</h2>
+                  <div class="muted">Repeat testing</div>
+                </div>
+                <label class="field">
+                  <span class="field__label">Preset Name</span>
+                  <input id="audience-preset-name-input" type="text" placeholder="Weekly warm list" />
+                </label>
+                <div class="card__actions action-row action-row--compact">
+                  <button id="save-audience-preset-btn" class="secondary-button" type="button">Save Preset</button>
+                  <button id="load-audience-preset-btn" class="secondary-button" type="button">Load Preset</button>
+                  <button id="delete-audience-preset-btn" class="danger-button" type="button">Delete Preset</button>
+                </div>
+                <label class="field">
+                  <span class="field__label">Saved Presets</span>
+                  <select id="audience-preset-select">
+                    <option value="">Select a saved audience preset</option>
+                  </select>
+                </label>
+                <div id="audience-preset-summary" class="summary summary--muted">
+                  No saved audience presets yet.
+                </div>
+              </section>
+            </aside>
+          </div>
+        </section>
+
+        <section class="page-panel" data-page-panel="compose">
+          <div class="page-grid page-grid--compose">
+            <div class="stack-column">
+              <section class="card">
+                <div class="card__title-row">
+                  <h2>Message</h2>
+                  <div class="card__actions">
+                    <button id="paste-message-btn" class="link-button" type="button">Paste Message</button>
+                    <button id="save-template-btn" class="link-button" type="button">Save Template</button>
+                  </div>
+                </div>
+
+                <label class="field">
+                  <span class="field__label">Message Template</span>
+                  <textarea
+                    id="message-input"
+                    rows="10"
+                    placeholder="Hello {{FirstName}}, this is your free WhatsApp sender."
+                  ></textarea>
+                </label>
+
+                <div class="grid grid--2">
+                  <label class="field checkbox-field">
+                    <input id="timestamp-checkbox" type="checkbox" />
+                    <span>Add timestamp at the end of every message</span>
+                  </label>
+
+                  <label class="field">
+                    <span class="field__label">Saved Templates</span>
+                    <select id="template-select">
+                      <option value="">Select a saved template</option>
+                    </select>
+                  </label>
+                </div>
+              </section>
+
+              <section class="card">
+                <div class="card__title-row">
+                  <h2>Attachments</h2>
+                  <div class="card__actions">
+                    <button id="clear-attachments-btn" class="link-button" type="button">Clear Attachments</button>
+                  </div>
+                </div>
+
+                <div class="grid grid--2">
+                  <label class="field">
+                    <span class="field__label">Attachments</span>
+                    <input
+                      id="attachment-input"
+                      type="file"
+                      multiple
+                      accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlsx,.csv,.txt,.zip,.webp"
+                    />
+                  </label>
+
+                  <div class="field field--info">
+                    <span class="field__label">Selected Files</span>
+                    <div id="attachment-list" class="file-list">
+                      <span class="muted">No files selected.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="grid grid--2">
+                  <label class="field checkbox-field">
+                    <input id="attachment-caption-checkbox" type="checkbox" checked />
+                    <span>Use the message as the first attachment caption</span>
+                  </label>
+
+                  <label class="field checkbox-field">
+                    <input id="voice-note-checkbox" type="checkbox" />
+                    <span>Send audio files as voice notes</span>
+                  </label>
+                </div>
+
+                <div id="attachment-summary" class="summary summary--muted">
+                  No files selected.
+                </div>
+              </section>
+            </div>
+
+            <aside class="stack-column">
+              <section class="card">
+                <div class="card__title-row">
+                  <h2>Live Preview</h2>
+                  <div id="preview-recipient-label" class="muted">Preview using sample data.</div>
+                </div>
+                <div class="mini-metrics">
+                  <div class="mini-metric">
+                    <span class="stat-label">Chars</span>
+                    <strong id="message-char-count">0</strong>
+                  </div>
+                  <div class="mini-metric">
+                    <span class="stat-label">Lines</span>
+                    <strong id="message-line-count">0</strong>
+                  </div>
+                  <div class="mini-metric">
+                    <span class="stat-label">Variables</span>
+                    <strong id="compose-variable-count">0</strong>
+                  </div>
+                  <div class="mini-metric">
+                    <span class="stat-label">Files</span>
+                    <strong id="compose-attachment-count">0</strong>
+                  </div>
+                </div>
+                <pre id="preview-text" class="preview-box">Your message preview will appear here.</pre>
+              </section>
+
+              <section class="card">
+                <div class="card__title-row">
+                  <h2>Compose Tips</h2>
+                </div>
+                <div class="bullet-list">
+                  <div>Keep the first line clear because many recipients see it in notifications.</div>
+                  <div>Use imported columns like <code>{{FirstName}}</code> or <code>{{CustomField}}</code> for personalization.</div>
+                  <div>If you attach media, you can use the message as the first file caption.</div>
+                </div>
+              </section>
+            </aside>
+          </div>
+        </section>
+
+        <section class="page-panel" data-page-panel="campaign">
+          <div class="page-grid page-grid--campaign">
+            <div class="stack-column">
+              <section class="card">
+                <div class="card__title-row">
+                  <h2>Timing</h2>
+                  <div class="muted">Tune pacing before you start the run.</div>
+                </div>
+
+                <label class="field">
+                  <span class="field__label">Campaign Name</span>
+                  <input id="campaign-name-input" type="text" placeholder="March follow-up batch" />
+                </label>
+
+                <div class="grid grid--4">
+                  <label class="field">
+                    <span class="field__label">Min Delay (s)</span>
+                    <input id="min-delay-input" type="number" min="1" max="300" value="10" />
+                  </label>
+
+                  <label class="field">
+                    <span class="field__label">Max Delay (s)</span>
+                    <input id="max-delay-input" type="number" min="1" max="300" value="18" />
+                  </label>
+
+                  <label class="field">
+                    <span class="field__label">Batch Size</span>
+                    <input id="batch-size-input" type="number" min="0" max="50" value="8" />
+                  </label>
+
+                  <label class="field">
+                    <span class="field__label">Batch Pause (s)</span>
+                    <input id="batch-pause-input" type="number" min="0" max="3600" value="180" />
+                  </label>
+                </div>
+              </section>
+
+              <section class="card">
+                <div class="card__title-row">
+                  <h2>Run Controls</h2>
+                  <div class="muted">A run monitor will also appear inside WhatsApp Web.</div>
+                </div>
+
+                <div class="action-row">
+                  <button id="start-btn" class="primary-button" type="button">Start Sending</button>
+                  <button id="pause-btn" class="secondary-button" type="button">Pause</button>
+                  <button id="resume-btn" class="secondary-button" type="button">Resume</button>
+                  <button id="stop-btn" class="danger-button" type="button">Stop</button>
+                </div>
+              </section>
+            </div>
+
+            <aside class="stack-column">
+              <section class="card">
+                <div class="card__title-row">
+                  <h2>Safety Controls</h2>
+                  <div class="muted">Lower-risk settings</div>
+                </div>
+                <div class="grid grid--2">
+                  <label class="field">
+                    <span class="field__label">Warm-Up Profile</span>
+                    <select id="warmup-profile-select">
+                      <option value="careful">Careful</option>
+                      <option value="balanced">Balanced</option>
+                      <option value="custom">Custom</option>
+                    </select>
+                  </label>
+
+                  <label class="field">
+                    <span class="field__label">Max Recipients / Run</span>
+                    <input id="max-recipients-input" type="number" min="1" max="250" value="30" />
+                  </label>
+                </div>
+
+                <div class="grid grid--2">
+                  <label class="field">
+                    <span class="field__label">Daily Send Cap</span>
+                    <input id="daily-send-cap-input" type="number" min="1" max="300" value="60" />
+                  </label>
+
+                  <label class="field">
+                    <span class="field__label">Stop After Failures</span>
+                    <input id="stop-after-failures-input" type="number" min="0" max="20" value="4" />
+                  </label>
+                </div>
+
+                <div class="grid grid--2">
+                  <label class="field">
+                    <span class="field__label">Stop After Consecutive Failures</span>
+                    <input
+                      id="stop-after-consecutive-failures-input"
+                      type="number"
+                      min="0"
+                      max="10"
+                      value="2"
+                    />
+                  </label>
+
+                  <label class="field">
+                    <span class="field__label">Failure-Rate Stop (%)</span>
+                    <input id="failure-rate-threshold-input" type="number" min="0" max="100" value="30" />
+                  </label>
+                </div>
+
+                <div class="grid grid--2">
+                  <label class="field">
+                    <span class="field__label">Failure-Rate Check After</span>
+                    <input id="failure-rate-min-sample-input" type="number" min="1" max="50" value="8" />
+                  </label>
+
+                  <div class="field field--info">
+                    <span class="field__label">Recommended</span>
+                    <div class="summary summary--muted">
+                      Start with `Careful`, small opted-in lists, recent contacts, and a modest daily cap.
+                    </div>
+                  </div>
+                </div>
+
+                <label class="field checkbox-field">
+                  <input id="confirm-opt-in-checkbox" type="checkbox" />
+                  <span>I confirm these recipients explicitly opted in to receive WhatsApp messages.</span>
+                </label>
+
+                <label class="field checkbox-field">
+                  <input id="positive-consent-only-checkbox" type="checkbox" />
+                  <span>Only send to imported leads that have positive consent data in their fields.</span>
+                </label>
+
+                <div class="grid grid--2">
+                  <label class="field">
+                    <span class="field__label">Known Blocks</span>
+                    <input id="known-blocks-input" type="number" min="0" max="50" value="0" />
+                  </label>
+
+                  <label class="field">
+                    <span class="field__label">Known Reports</span>
+                    <input id="known-reports-input" type="number" min="0" max="50" value="0" />
+                  </label>
+                </div>
+
+                <div id="feedback-summary" class="summary summary--muted">
+                  Blocks and reports are manual inputs from your own feedback or business metrics.
+                  WhatsApp Web does not expose these counts here.
+                </div>
+
+                <div id="safety-summary" class="summary summary--muted">
+                  Today usage, consent coverage, and pacing guidance will appear here.
+                </div>
+              </section>
+
+              <section class="card">
+                <div class="card__title-row">
+                  <h2>Preflight</h2>
+                  <div class="muted">Before you launch</div>
+                </div>
+                <div class="preflight-list">
+                  <div class="preflight-item">
+                    <span class="stat-label">Connection</span>
+                    <strong id="preflight-connection">Waiting for WhatsApp Web</strong>
+                  </div>
+                  <div class="preflight-item">
+                    <span class="stat-label">Audience</span>
+                    <strong id="preflight-audience">No recipients selected</strong>
+                  </div>
+                  <div class="preflight-item">
+                    <span class="stat-label">Message</span>
+                    <strong id="preflight-message">No message yet</strong>
+                  </div>
+                  <div class="preflight-item">
+                    <span class="stat-label">Attachments</span>
+                    <strong id="preflight-attachments">No attachments</strong>
+                  </div>
+                  <div class="preflight-item">
+                    <span class="stat-label">Source</span>
+                    <strong id="preflight-source">Numbers</strong>
+                  </div>
+                  <div class="preflight-item">
+                    <span class="stat-label">Estimate</span>
+                    <strong id="preflight-estimate">0 recipients</strong>
+                  </div>
+                  <div class="preflight-item">
+                    <span class="stat-label">Exclusions</span>
+                    <strong id="preflight-exclusions">0 numbers</strong>
+                  </div>
+                  <div class="preflight-item">
+                    <span class="stat-label">Consent</span>
+                    <strong id="preflight-consent">No consent data loaded yet</strong>
+                  </div>
+                  <div class="preflight-item">
+                    <span class="stat-label">Daily Cap</span>
+                    <strong id="preflight-daily-cap">0 used today</strong>
+                  </div>
+                  <div class="preflight-item">
+                    <span class="stat-label">Risk Level</span>
+                    <strong id="preflight-risk">Low</strong>
+                  </div>
+                </div>
+                <div id="preflight-risk-notes" class="summary summary--muted">
+                  Risk notes and launch warnings will appear here.
+                </div>
+              </section>
+
+              <section class="card">
+                <div class="card__title-row">
+                  <h2>Run Notes</h2>
+                </div>
+                <div class="bullet-list">
+                  <div>Keep the WhatsApp tab open while the campaign is running.</div>
+                  <div>Pause and resume are available both here and from the floating WhatsApp monitor.</div>
+                  <div>Group campaigns expand to direct recipients and use de-duplication before sending.</div>
+                </div>
+              </section>
+            </aside>
+          </div>
+        </section>
+
+        <section class="page-panel" data-page-panel="results">
+          <section class="card">
+            <div class="card__title-row">
+              <h2>Results</h2>
+              <div class="card__actions">
+                <button id="download-results-btn" class="link-button" type="button">Export CSV</button>
+                <button id="download-failed-btn" class="link-button" type="button">Export Failed</button>
+                <button id="retry-failed-btn" class="link-button" type="button">Load Failed As Audience</button>
+                <button id="clear-results-btn" class="link-button" type="button">Clear</button>
+              </div>
+            </div>
+
+            <div class="mini-metrics mini-metrics--results">
+              <div class="mini-metric">
+                <span class="stat-label">Status</span>
+                <strong id="results-status-summary">Idle</strong>
+              </div>
+              <div class="mini-metric">
+                <span class="stat-label">Success Rate</span>
+                <strong id="results-success-rate">0%</strong>
+              </div>
+              <div class="mini-metric mini-metric--wide">
+                <span class="stat-label">Last Error</span>
+                <strong id="results-last-error">No failures logged.</strong>
+              </div>
+            </div>
+
+            <div id="results-list" class="results-list">
+              <div class="muted">No results yet.</div>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <template id="selection-item-template">
+      <label class="selection-item">
+        <input class="selection-item__checkbox" type="checkbox" />
+        <div class="selection-item__body">
+          <strong class="selection-item__title"></strong>
+          <div class="selection-item__meta"></div>
+        </div>
+      </label>
+    </template>
+
+    <template id="result-item-template">
+      <div class="result-item">
+        <div class="result-item__top">
+          <strong class="result-item__phone"></strong>
+          <span class="result-item__status"></span>
+        </div>
+        <div class="result-item__meta"></div>
+      </div>
+    </template>
+
+    <script src="scripts/file-tools.js" defer></script>
+    <script src="scripts/popup.js" defer></script>
+  </body>
+</html>

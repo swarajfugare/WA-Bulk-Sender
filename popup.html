@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WA Sender</title>
+    <link rel="stylesheet" href="styles/launcher.css" />
+  </head>
+  <body class="launcher-body">
+    <div class="launcher-shell">
+      <section class="launcher-hero">
+        <p class="eyebrow">Free Forever</p>
+        <h1>WA Sender Studio</h1>
+        <p class="subcopy">
+          Use the full studio page for imports, paste, campaign setup, and sending.
+        </p>
+      </section>
+
+      <section class="launcher-card">
+        <div class="launcher-row">
+          <span id="status-badge" class="badge badge--idle">Idle</span>
+          <div id="launcher-status-copy" class="muted">
+            Open the studio to work with a bigger, cleaner interface.
+          </div>
+        </div>
+
+        <button id="open-studio-btn" class="primary-button" type="button">Open Full Studio</button>
+
+        <div class="launcher-actions">
+          <button id="open-wa-btn" class="ghost-button" type="button">Open WhatsApp Web</button>
+          <button id="refresh-status-btn" class="ghost-button" type="button">Refresh Status</button>
+        </div>
+      </section>
+
+      <section class="launcher-card">
+        <div class="card__title-row">
+          <h2>Connection</h2>
+          <div id="connection-meta" class="muted">Waiting for WhatsApp Web.</div>
+        </div>
+
+        <div class="status-grid">
+          <div class="status-tile">
+            <span class="stat-label">Bridge</span>
+            <strong id="bridge-status-text">Unknown</strong>
+          </div>
+          <div class="status-tile">
+            <span class="stat-label">Auth</span>
+            <strong id="auth-status-text">Unknown</strong>
+          </div>
+          <div class="status-tile">
+            <span class="stat-label">Stream</span>
+            <strong id="stream-status-text">Unknown</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="launcher-card">
+        <div class="card__title-row">
+          <h2>Run Snapshot</h2>
+          <div id="run-hint" class="muted">No active run.</div>
+        </div>
+
+        <div class="snapshot-grid">
+          <div class="snapshot-tile">
+            <span class="stat-label">Total</span>
+            <strong id="total-count">0</strong>
+          </div>
+          <div class="snapshot-tile">
+            <span class="stat-label">Done</span>
+            <strong id="done-count">0</strong>
+          </div>
+          <div class="snapshot-tile">
+            <span class="stat-label">Success</span>
+            <strong id="success-count">0</strong>
+          </div>
+          <div class="snapshot-tile">
+            <span class="stat-label">Failed</span>
+            <strong id="failure-count">0</strong>
+          </div>
+        </div>
+
+        <div id="active-recipient" class="summary summary--muted">No job running.</div>
+      </section>
+    </div>
+
+    <script src="scripts/popup-launcher.js" defer></script>
+  </body>
+</html>

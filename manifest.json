@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "WA Bulk Sender Free",
+  "description": "Free WhatsApp bulk sender for Chrome with a polished studio page, live WhatsApp campaign monitor, local restriction-risk estimate, safer preflight controls, chats, contacts, groups, labels, country filters, attachments, templates, pause and resume controls, and results export.",
+  "version": "0.9.0",
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "scripting",
+    "unlimitedStorage"
+  ],
+  "optional_permissions": [
+    "clipboardRead"
+  ],
+  "host_permissions": [
+    "https://web.whatsapp.com/*"
+  ],
+  "action": {
+    "default_title": "WA Bulk Sender Free",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://web.whatsapp.com/*"
+      ],
+      "js": [
+        "scripts/content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "scripts/page-bridge.js",
+        "third_party/wppconnect/wppconnect-wa.js"
+      ],
+      "matches": [
+        "https://web.whatsapp.com/*"
+      ]
+    }
+  ]
+}
