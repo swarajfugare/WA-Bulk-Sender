@@ -1,98 +1,205 @@
-# WA Bulk Sender Free
+# 🚀 WA Bulk Sender (Free & Local)
 
-Free Chrome extension for sending personalized WhatsApp messages from `web.whatsapp.com` without any premium gate, login wall, or paid unlock flow.
+> 💬 Send personalized WhatsApp messages at scale — safely, locally, and without any premium lock.
 
-## Current version
+---
 
-`0.9.0`
+## 🌐 About the Project
 
-## What changed in 0.9.0
+**WA Bulk Sender** is a powerful Chrome Extension that helps you send **bulk WhatsApp messages** directly from WhatsApp Web.
 
-- Kept the redesigned studio page and WhatsApp-side floating monitor
-- Added a circular local restriction-risk estimate on the studio page and inside the WhatsApp monitor
-- Added manual known block/report inputs so the estimate can include real feedback you already know
-- Added an explanation-driven risk model that reacts to pacing, volume, failures, consent coverage, and message style
-- Added stronger preflight safety checks with risk notes before a run starts
-- Added daily send caps tracked from local campaign history
-- Added positive-consent-only mode for imported leads with consent fields
-- Added automatic skipping for recipients that look opted out or explicitly negative on consent
-- Added stop-after-consecutive-failures and failure-rate stop controls
-- Tightened the default pacing and warm-up profiles to be more conservative
-- Prevented starting a second campaign while one is already active
-- Added `Export Failed` results for easier review of failures
-- Added saved audience presets for repeat testing
-- Added `Load Failed As Audience` so failed numbers can be reviewed and retried more carefully
-- Added campaign name support into result exports
+✔ No login system  
+✔ No paid unlock  
+✔ 100% local processing  
+✔ Smart safety & risk system  
 
-## Features
+🔗 Built & used by:  
+👉 https://matoshreecollection.in
 
-- Send to manual numbers, imported lists, chats, contacts, groups, labels, and country-based audiences
-- Import recipients from `CSV`, `TXT`, or `XLSX`
-- Use placeholders like `{{FirstName}}`, `{{Name}}`, and `{{WhatsApp Number}}`
-- Attach images, video, audio, documents, stickers, and voice notes
-- Use the message as the first attachment caption when supported
-- Show a live campaign monitor directly inside WhatsApp Web while sending
-- Show a local restriction-risk estimate using campaign pace, failures, consent coverage, and manual feedback counts
-- Pause, resume, stop, and recover jobs while WhatsApp Web stays open
-- Add random delays, batch pauses, daily caps, and failure-based stop guards
-- Skip excluded numbers before starting a run
-- Limit recipients per run and stop automatically after chosen failure thresholds
-- Review safety guidance before launch, including consent coverage and local daily usage
-- Enter known user block/report counts manually if you track them outside WhatsApp Web
-- Save reusable templates locally
-- Export result logs as `CSV`
+---
 
-## How to load it in Chrome
+## ✨ Key Features
 
-1. Open `chrome://extensions`
-2. Enable `Developer mode`
-3. Click `Load unpacked`
-4. Select `/Users/swarajfugare/Downloads/Code/wa-sender`
+### 📩 Messaging Capabilities
+- Send messages to:
+  - Manual numbers
+  - CSV / Excel lists
+  - Contacts / Chats / Groups / Labels
+- Use dynamic placeholders:
+  - `{{FirstName}}`, `{{Name}}`, etc.
+- Attach:
+  - Images, Videos, Docs, Audio, Stickers
 
-## Recommended workflow
+---
 
-1. Load the extension and click the popup
-2. Open the full studio page
-3. Open WhatsApp Web and log in completely
-4. Refresh WhatsApp data if you want chats, contacts, groups, labels, or countries
-5. Choose your audience
-6. Paste or write the message
-7. Optionally import a file, add attachments, and tune delays
-8. Review the safety summary, daily cap, and consent notes
-9. Start the run and keep WhatsApp Web open
+### ⚡ Smart Automation
+- Random delays & batching
+- Daily send limits
+- Auto skip duplicates
+- Pause / Resume / Stop anytime
 
-## Import format
+---
 
-Use the built-in template download if you want a ready-made starter file.
+### 🧠 Safety & Risk System
+- Local restriction-risk estimator
+- Based on:
+  - Message pace
+  - Failures
+  - Consent coverage
+- Manual block/report input support
+- Failure-based auto stop system
 
-Minimum required column:
+---
 
-- `WhatsApp Number`
+### 📊 Campaign Control
+- Live monitor inside WhatsApp Web
+- Export results (CSV)
+- Retry failed numbers
+- Save audience presets
+- Campaign history tracking
 
-Optional columns become variables:
+---
 
-- `FirstName`
-- `LastName`
-- `Name`
-- `CustomField`
+## 📂 Project Structure
 
-Example:
-
-```csv
-WhatsApp Number,FirstName,LastName,CustomField
-+15551234567,Alex,Rivera,Spring Offer
+```
+WA-Bulk-Sender/
+│
+├── data/                # Local data storage
+├── scripts/             # Core logic
+├── styles/              # UI styling
+├── third_party/         # External libraries (WPPConnect)
+│
+├── popup.html           # Extension popup
+├── studio.html          # Main dashboard
+├── manifest.json        # Chrome extension config
+├── README.md
 ```
 
-Message example:
+---
 
-```text
+## 🛠️ Installation Guide
+
+### Step 1: Download Project
+Clone or download this repo:
+```
+git clone https://github.com/swarajfugare/WA-Bulk-Sender.git
+```
+
+---
+
+### Step 2: Load in Chrome
+
+1. Open Chrome  
+2. Go to:
+```
+chrome://extensions
+```
+3. Enable **Developer Mode**
+4. Click **Load Unpacked**
+5. Select your project folder
+
+---
+
+## 🚀 How to Use
+
+### Step-by-Step Workflow
+
+1. Open extension popup  
+2. Open **Studio Page**  
+3. Login to WhatsApp:
+   👉 https://web.whatsapp.com  
+4. Refresh WhatsApp data  
+5. Choose audience  
+6. Add message + placeholders  
+7. (Optional) Import file  
+8. Set delays & limits  
+9. Check safety summary  
+10. Start sending 🚀  
+
+---
+
+## 📄 Import Format
+
+Minimum column required:
+```
+WhatsApp Number
+```
+
+Optional:
+```
+FirstName, LastName, Name, CustomField
+```
+
+### Example CSV:
+```
+WhatsApp Number,FirstName,CustomField
++919876543210,Swaraj,Offer
+```
+
+### Message Example:
+```
 Hello {{FirstName}}, your {{CustomField}} is ready.
 ```
 
-## Notes
+---
 
-- Keep `https://web.whatsapp.com/` open while a job is running
-- Group, label, and country sends expand to direct recipients and are de-duplicated before sending
-- Local campaign history is used to estimate how much you already attempted today under the current cap
-- The restriction-risk percentage is only a local estimate and not an official WhatsApp score
-- The build is fully local and does not include upgrade, premium, payment, or login-gating logic
+## ⚠️ Important Notes
+
+- Keep WhatsApp Web **open while sending**
+- This tool is:
+  - ❌ Not official WhatsApp
+  - ⚠️ Use responsibly
+- Risk % is:
+  - 🔹 Only an estimate
+  - 🔹 Not WhatsApp’s real score
+
+---
+
+## 🔐 Safety Tips
+
+✔ Use slow sending speed  
+✔ Avoid spammy messages  
+✔ Always use consent-based data  
+✔ Start with small batches  
+
+---
+
+## 📦 Version
+
+**Current Version:** `0.9.0`
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License**
+
+---
+
+## 👨‍💻 Developer
+
+**Swaraj Fugare**
+
+---
+
+## ❤️ Support
+
+If this project helps you:
+
+⭐ Star the repository  
+🔗 Share with others  
+🌐 Visit: https://matoshreecollection.in  
+
+---
+
+## 🚀 Future Updates
+
+- AI message personalization
+- Better analytics dashboard
+- Smart scheduling
+- Multi-language support
+
+---
+
+> ⚡ Build. Automate. Grow.
